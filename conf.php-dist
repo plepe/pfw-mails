@@ -1,0 +1,3 @@
+<?php
+$template_file = 'template.txt';
+$data_file = 'data.csv';
