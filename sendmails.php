@@ -1,5 +1,6 @@
 <?php
 require 'conf.php';
+require 'vendor/autoload.php';
 
 $template = file_get_contents($template_file);
 
@@ -18,6 +19,24 @@ while ($row = fgetcsv($csvfile)) {
     continue; // skip
   }
 
-  $body = strtr($template, $tr);
+  $email = new \SendGrid\Mail\Mail();
+
+  $email->setFrom($from_email, $from_name);
+  $email->setSubject(strtr($subject_template, $tr));
+  $email->addTo(
+    strtr($to_email_template, $tr),
+    strtr($to_name_template, $tr)
+  );
+
+  $email->addContent("text/plain", strtr($template, $tr));
+
+  $sendgrid = new \SendGrid($SENDGRID_API_KEY);
+
+  try {
+    $response = $sendgrid->send($email);
+    print "{$entry['private_id']}:" . $response->statusCode() . "\n";
+  } catch (Exception $e) {
+    print "{$entry['private_id']}: Caught exception: " . $e->getMessage() . "\n";
+  }
 }
 

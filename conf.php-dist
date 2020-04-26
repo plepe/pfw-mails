@@ -1,3 +1,11 @@
 <?php
+$SENDGRID_API_KEY = '';
+
+$from_email = 'test@example.com';
+$from_name = 'Max Mustermann';
+$subject_template = 'Subject template';
+$to_email_template = '[email]';
+$to_name_template = '[vorname] [nachname]';
+
 $template_file = 'template.txt';
 $data_file = 'data.csv';
