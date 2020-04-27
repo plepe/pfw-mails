@@ -7,6 +7,8 @@ $template = file_get_contents($template_file);
 $csvfile = fopen($data_file, 'r');
 $fields = fgetcsv($csvfile);
 
+$sendgrid = new \SendGrid($SENDGRID_API_KEY);
+
 while ($row = fgetcsv($csvfile)) {
   $entry = array();
   $tr = array();
@@ -29,8 +31,6 @@ while ($row = fgetcsv($csvfile)) {
   );
 
   $email->addContent("text/plain", strtr($template, $tr));
-
-  $sendgrid = new \SendGrid($SENDGRID_API_KEY);
 
   try {
     $response = $sendgrid->send($email);
