@@ -9,6 +9,8 @@ $fields = fgetcsv($csvfile);
 
 $sendgrid = new \SendGrid($SENDGRID_API_KEY);
 
+$filter_date_recorded = "2020-04-27 00:00:00";
+
 while ($row = fgetcsv($csvfile)) {
   $entry = array();
   $tr = array();
@@ -19,6 +21,10 @@ while ($row = fgetcsv($csvfile)) {
 
   if ($entry['last_accessed']) {
     continue; // skip
+  }
+
+  if (isset($filter_date_recorded) && $entry['date_recorded'] > $filter_date_recorded) {
+    continue;
   }
 
   $email = new \SendGrid\Mail\Mail();
