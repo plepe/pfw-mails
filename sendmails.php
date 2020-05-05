@@ -9,8 +9,6 @@ $fields = fgetcsv($csvfile);
 
 $sendgrid = new \SendGrid($SENDGRID_API_KEY);
 
-$filter_date_recorded = "2020-04-27 00:00:00";
-
 while ($row = fgetcsv($csvfile)) {
   $entry = array();
   $tr = array();
