@@ -25,6 +25,10 @@ while ($row = fgetcsv($csvfile)) {
     continue;
   }
 
+  if (isset($filter_date_recorded_before) && $entry['date_recorded'] < $filter_date_recorded_before) {
+    continue;
+  }
+
   $email = new \SendGrid\Mail\Mail();
 
   $email->setFrom($from_email, $from_name);

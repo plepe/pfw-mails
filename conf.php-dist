@@ -12,3 +12,6 @@ $data_file = 'data.csv';
 
 // Only include entries up to this data
 $filter_date_recorded = "2020-04-27 00:00:00";
+
+// Exclude entries before
+$filter_date_recorded_before = "2020-04-27 00:00:00";
