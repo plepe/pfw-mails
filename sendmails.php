@@ -33,10 +33,15 @@ while ($row = fgetcsv($csvfile)) {
 
   $email->setFrom($from_email, $from_name);
   $email->setSubject(strtr($subject_template, $tr));
-  $email->addTo(
-    strtr($to_email_template, $tr),
-    strtr($to_name_template, $tr)
-  );
+  try {
+    $email->addTo(
+      strtr($to_email_template, $tr),
+      strtr($to_name_template, $tr)
+    );
+  } catch (Exception $e) {
+    print "{$entry['private_id']}: Caught exception: " . $e->getMessage() . "\n";
+    continue;
+  }
 
   $email->addContent("text/plain", strtr($template, $tr));
 
